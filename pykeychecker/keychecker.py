@@ -6,6 +6,8 @@ from pyblake2 import blake2b
 from hashlib import sha256
 import binascii
 
+from appJar import gui
+
 def bitcoin_address(digest):
     bitcoin_keys = [
         '\x02\xc0T!\xaa\x00\x13\xee\xd38T#\xb6<\xd2\x89' +
@@ -28,41 +30,60 @@ def tezos_pkh(digest):
 def ethdata_to_tz1(ethdata):
     return ethdata[10:-8]
 
-if __name__ == '__main__':
-        
-    if len(sys.argv) == 18:
-        
-        mnemonic = ' '.join(sys.argv[1:16]).lower()
-        email = sys.argv[16]
-        password = sys.argv[17]
-        salt = unicodedata.normalize(
-            "NFKD", (email + password).decode("utf8")).encode("utf8")
-        try:
-            seed = bitcoin.mnemonic_to_seed(mnemonic, salt)
-        except:
-            print("Invalid mnemonic")
-            exit(1)
-        pk, sk = pysodium.crypto_sign_seed_keypair(seed[0:32])
-        pkh = blake2b(pk,20).digest()
-
-        print "public key hash: ", tezos_pkh(pkh)
+def check_contribution_details(address, mnemonic, email, password):
+    salt = unicodedata.normalize("NFKD", (email + password).decode("utf8")).encode("utf8")
     
-    elif  len(sys.argv) == 2:
-        tz_input = sys.argv[1]
-        assert(tz_input == bitcoin.bin_to_b58check(bitcoin.b58check_to_bin(tz_input)[2:], magicbyte=434591))
-
-        try:
-            pkh = bitcoin.b58check_to_bin(tz_input)[2:]
-        except:
-            print "Invalid public key hash"
-
-    else:
-        print("""Usage:
-python keychecker.py garage absurd steak ...  email password
-or
-python keychecker.py tz1YoUrPuBlicKeYhaSh""")
+    try:
+        seed = bitcoin.mnemonic_to_seed(mnemonic, salt)
+    except:
+        print("Invalid mnemonic")
         exit(1)
 
-            
-    print "Ethereum data:   ", ethereum_data(pkh)
-    print "Bitcoin address: ", bitcoin_address(pkh)
+    pk, sk = pysodium.crypto_sign_seed_keypair(seed[0:32])
+    pkh = blake2b(pk,20).digest()
+
+    decrypted_address = tezos_pkh(pkh)
+
+    return {
+        "success" : address == decrypted_address,
+        "keys" : [pk, sk],
+        "digest" : pkh,
+        "hash" : decrypted_address,
+        "eth" : ethereum_data(pkh),
+        "btc" : bitcoin_address(pkh)
+    }
+
+def check(button):
+    address = app.getEntry("Address")
+    mnemonic = app.getEntry("Mnemonic")
+    email = app.getEntry("Email")
+    password = app.getEntry("Password")
+
+    result = check_contribution_details(address, mnemonic, email, password)
+    if result['success']:
+        app.infoBox("Success!", "Your contribution details are correct!\nYou have everything you need to access your tokens on launch.", parent=None)
+    else:
+        app.warningBox(":(", "Unfortunately those details don't seem to be correct.\nPlease double check the data you submitted and try again!", parent=None)
+
+if __name__ == '__main__':
+    app = gui("Tezos Contribution Checker", "500x300")
+    app.setBg("#474849")
+    app.addImage("logo", "logo.gif")
+
+    app.addLabelEntry("Address")
+    app.setLabelFg("Address", "white")
+
+    app.addLabelEntry("Mnemonic")
+    app.setLabelFg("Mnemonic", "white")
+
+    app.addLabelEntry("Email")
+    app.setLabelFg("Email", "white")
+
+    app.addLabelSecretEntry("Password")
+    app.setLabelFg("Password", "white")
+
+    app.addLabel("padding" , "")
+
+    app.addButtons(["Check Contribution"], check)
+
+    app.go()
