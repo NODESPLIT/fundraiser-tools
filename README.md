@@ -2,8 +2,8 @@
   
     
 ##### Binaries  
-[v0.1 - Mac OSX](https://github.com/NODESPLIT/fundraiser-tools/raw/master/pykeychecker/bin/0.1/macosx.zip)
-[v0.1 - Windows](https://github.com/NODESPLIT/fundraiser-tools/raw/master/pykeychecker/bin/0.1/windows.zip)
+[v0.1 - Mac OSX](https://github.com/NODESPLIT/fundraiser-tools/raw/master/pykeychecker/bin/0.1/macosx.zip)  
+[v0.1 - Windows](https://github.com/NODESPLIT/fundraiser-tools/raw/master/pykeychecker/bin/0.1/windows.zip)  
 
 
 
