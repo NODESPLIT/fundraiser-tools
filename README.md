@@ -1,5 +1,11 @@
 # Python GUI built on top of Arthur's fundraiser tools  
   
+    
+##### Binaries  
+[v0.1 - Mac OSX](https://github.com/NODESPLIT/fundraiser-tools/raw/master/pykeychecker/bin/0.1/macosx.zip)
+
+
+
 built by Jon - admin of the [unofficial Tezos Telegram](https://t.me/tezosplatform)  
   
 web: [e.rroneo.us](http://e.rroneo.us/)  
@@ -7,7 +13,6 @@ email: [jon@e.rroneo.us](mailto:jon@e.rroneo.us)
 telegram: [@erroneous](https://t.me/erroneous)  
   
 feel free to contact me with any questions!  
-  
   
   
   
