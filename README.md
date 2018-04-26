@@ -1,10 +1,10 @@
 # Python GUI built on top of Arthur's fundraiser tools
 <br>
 <br>
-built by Jon - admin of the unofficial Tezos Telegram (https://t.me/tezosplatform)<br>
-web: http://e.rroneo.us/<br>
-email: jon@e.rroneo.us<br>
-telegram: https://t.me/erroneous<br>
+built by Jon - admin of the [unofficial Tezos Telegram](https://t.me/tezosplatform)<br>
+web: [e.rroneo.us](http://e.rroneo.us/)<br>
+email: [jon@e.rroneo.us](jon@e.rroneo.us)<br>
+telegram: [@erroneous](https://t.me/erroneous)<br>
 <br>
 feel free to contact me with any questions!<br>
 <br>
